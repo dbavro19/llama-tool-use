@@ -53,7 +53,7 @@ def intelligent_document_processor(file):
     st.image(image)
 
 
-    category, thinking, confidence = llama_with_image(image, file_type, system_prompt=set_category_prompt(),model_id = "us.meta.llama3-2-11b-instruct-v1:0", max_gen_len=100, parse_value="category")
+    category, thinking, confidence = llama_with_image(image, file_type, system_prompt=set_category_prompt(),model_id = "us.meta.llama3-2-90b-instruct-v1:0", max_gen_len=100, parse_value="chosen_category")
 
     st.write(f"Document Category: {category}")
 
@@ -73,6 +73,9 @@ def intelligent_document_processor(file):
         if confidence=="Medium" or confidence=="Low":
             st.markdown(f"**WARNING!** Model Confidence is {confidence}")
             st.write(f"Though Process: {thinking}")
+
+        else:
+            st.markdown(f"Model Confidence is **{confidence}**")
 
         json_results = json.loads(results)
 
@@ -170,7 +173,7 @@ Return your results in a json format using the example below
 }}
 </example_format>
 
-You will also return your level of Confidence that the results are accurate and complete. This can be affected by image clarity or missing data. Return a value of High, Medium, or Low. Be honest and accurate in your rating. Medium and Low scores will be human reviewed
+You will also return your level of Confidence that the results are accurate and complete. This can be affected by image clarity, detail visibility, or missing data. Return a value of High, Medium, or Low. Be honest and accurate in your rating. Medium and Low scores will be human reviewed
 
 Think through each step of your thought process and write your thoughts down in <thinking> xml tags
 return the valid json array in <json_results> xml tags, with no other text
@@ -213,7 +216,7 @@ Return your results in a json format using the example below
 }}
 </example_format>
 
-You will also return your level of Confidence that the results are accurate and complete. This can be affected by image clarity or missing data. Return a value of High, Medium, or Low. Be honest and accurate in your rating. Medium and Low scores will be human reviewed
+You will also return your level of Confidence that the results are accurate and complete. This can be affected by image clarity, detail visibility, or missing data. Return a value of High, Medium, or Low. Be honest and accurate in your rating. Medium and Low scores will be human reviewed
 
 Think through each step of your thought process and write your thoughts down in <thinking> xml tags
 return the valid json array in <json_results> xml tags, with no other text
@@ -259,9 +262,12 @@ Return your results in a json format using the example below
 
 
 
-Think through each step of your thought process
+You will also return your level of Confidence that the results are accurate and complete. This can be affected by image clarity, detail visibility, or missing data. Return a value of High, Medium, or Low. Be honest and accurate in your rating. Medium and Low scores will be human reviewed
 
+Think through each step of your thought process and write your thoughts down in <thinking> xml tags
 return the valid json array in <json_results> xml tags, with no other text
+return your level of <confidence> xml tags with no other text
+
 
 <</SYS>>
 
@@ -321,7 +327,7 @@ Return your results in a json format using the example below
 </example_format>
 
 
-You will also return your level of Confidence that the results are accurate and complete. This can be affected by image clarity or missing data. Return a value of High, Medium, or Low. Be honest and accurate in your rating. Medium and Low scores will be human reviewed
+You will also return your level of Confidence that the results are accurate and complete. This can be affected by image clarity, detail visibility, or missing data. Return a value of High, Medium, or Low. Be honest and accurate in your rating. Medium and Low scores will be human reviewed
 
 Think through each step of your thought process and write your thoughts down in <thinking> xml tags
 return the valid json array in <json_results> xml tags, with no other text
@@ -350,16 +356,23 @@ Valid Categories are:
      -Auto Insurance Claim
      -Drivers License
      -Pay Stub
-     -W2
+     -W2 (for W2, and other "Wage and Tax" documents)
      -Other
 
-
+the output format should looke like this
+<exmaple_output>
+<chosen_category>(Valid Category)</chosen_category>
+</exmaple_output>
 
 return the category in <category> xml tags. Do not include any other text in your response
 
 <</SYS>>
 
 Process this image document and return the category with no other text
+Valid categories are Auto Insurance Claim, Drivers License, Pay Stub, W2, or Other. You must respond with one of these categories.
+If the document isn't of the the valid categories, respond with Other
+
+return the category in <chosen_category> xml tags. Do not include any other text in your response
 """
     return system_prompt
 

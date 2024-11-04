@@ -126,11 +126,15 @@ if userQuery := st.chat_input("What is your question?"):
                         message_id = get_next_key(st.session_state.messages)
                         st.session_state.messages[message_id] = temp_assistant_message
 
+                        print(f"Model Tool (assistant) Response: {temp_assistant_message}")
+
                         #fomrating tool response as a model message
                         temp_user_message = spoof_tool_user_message(tool_use_id,answer_type, tool_answer)
                         #Add the fomred message to the session state
                         message_id = get_next_key(st.session_state.messages)
                         st.session_state.messages[message_id] = temp_user_message
+
+                        print(f"User Tool (auto) Response: {temp_user_message}")
 
                         response_2 = logic_lab_2.converse_with_bedrock_with_tools(list(st.session_state.messages.values()))
 

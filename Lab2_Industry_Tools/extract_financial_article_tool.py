@@ -102,11 +102,6 @@ return the json output in <results> xml tag with no other text
             answer_type = "text"
 
 
-        for item in json_results_output:
-            for key, value in item.items():
-                st.write(f"**{key}:** {value}")
-                st.write("---")  # Add a separator between items
-
 
 
     return json_results_output, answer_type
