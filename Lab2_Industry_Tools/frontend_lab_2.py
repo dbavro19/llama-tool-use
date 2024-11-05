@@ -203,7 +203,7 @@ if userQuery := st.chat_input("What is your question?"):
     message_id = get_next_key(st.session_state.messages)
     st.session_state.messages[message_id] = format_assistant_messages(str(answer))
 
-    st.session_state.messages = trim_chat_history(st.session_state.messages)
+    #st.session_state.messages = trim_chat_history(st.session_state.messages)
 
 
 
