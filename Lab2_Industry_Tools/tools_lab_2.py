@@ -11,7 +11,6 @@ from misc_functions import clean_and_convert_to_int, format_user_messages
 #Adding in our tools that we separated out into files (for organizational purposes)
 
 from stock_tool import get_stock_tool, get_stock_price 
-from random_number_tool import get_random_number_tool, random_number_1_to_100
 from trivia_tool import get_basic_trivia_tool, basic_trivia_tool
 from extract_financial_article_tool import extract_financial_article, get_extract_financial_article
 from trade_confirmation_tool import get_trade_confirmation, trade_confirmation
