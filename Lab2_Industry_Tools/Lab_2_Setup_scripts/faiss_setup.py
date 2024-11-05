@@ -33,7 +33,7 @@ def main():
     # Setup directories
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
-    doc_repo = os.path.join(current_dir, "doc_repo")
+    doc_repo = os.path.join(current_dir, "index_doc_repo")
     
     # Create doc_repo if it doesn't exist
     os.makedirs(doc_repo, exist_ok=True)
