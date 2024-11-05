@@ -47,7 +47,7 @@ def get_stock_tool():
 
 
 #Method to call the tool get_stock_price which retrieves stock infomration
-def get_stock_price(stock_symbol, user_question, get_52_week_details, return_to_llm=False):
+def get_stock_price(stock_symbol, user_question, get_52_week_details=False, return_to_llm=False):
 
     st.write(f"Retrieving stock price for: {stock_symbol}")
     # Logic to retrieve stock price

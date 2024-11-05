@@ -24,7 +24,7 @@ def get_bucket_name():
     return bucket_name
 
 
-def trim_chat_history(messages):
+def trim_chat_history_old(messages):
     if len(messages) <= 6:
         return messages
     print("Trimming chat history - OVER 6 messages")
@@ -35,6 +35,104 @@ def trim_chat_history(messages):
         print(f"{key}: {message}")
 
     return recent_messages
+
+
+
+
+
+def trim_chat_history(messages_dict, max_messages=20):
+    
+    if len(messages_dict) <= max_messages:
+        return messages_dict
+    
+    print("Trimming chat history - Chat History Before Trim")
+    for messages in messages_dict:
+        print(f"Message: {messages_dict[messages]}")
+    
+    # Convert to list of tuples (key, message) sorted by key
+    sorted_messages = sorted(messages_dict.items(), key=lambda x: x[0])
+    
+    # Helper function to check if message contains toolUse
+    def has_tool_use(msg):
+        if not isinstance(msg, dict):
+            return False
+        content = msg.get('content')
+        if not isinstance(content, list):
+            return False
+        for item in content:
+            if isinstance(item, dict) and 'toolUse' in item:
+                return True
+        return False
+    
+    # Helper function to check if message contains toolResult
+    def has_tool_result(msg):
+        if not isinstance(msg, dict):
+            return False
+        content = msg.get('content')
+        if not isinstance(content, list):
+            return False
+        for item in content:
+            if isinstance(item, dict) and 'toolResult' in item:
+                return True
+        return False
+    
+    # Identify tool sequences
+    tool_sequences = {}  # Maps toolUse indices to toolResult indices
+    for i, (_, msg) in enumerate(sorted_messages):
+        if has_tool_use(msg):
+            for j in range(i + 1, len(sorted_messages)):
+                if has_tool_result(sorted_messages[j][1]):
+                    tool_sequences[i] = j
+                    break
+    
+    # Calculate how many messages to remove
+    messages_to_remove = len(sorted_messages) - max_messages
+    
+    # Keep track of indices to remove
+    remove_indices = set()
+    
+    # Start from the beginning (oldest messages)
+    i = 0
+    while len(remove_indices) < messages_to_remove and i < len(sorted_messages):
+        current_msg = sorted_messages[i][1]
+        
+        # If it's part of a tool sequence, remove both toolUse and toolResult
+        if has_tool_use(current_msg):
+            if i in tool_sequences:
+                remove_indices.add(i)
+                remove_indices.add(tool_sequences[i])
+                i = tool_sequences[i] + 1
+                continue
+        
+        # If it's a user message, remove it and its corresponding assistant message
+        if current_msg.get('role') == 'user':
+            if i + 1 < len(sorted_messages):  # Make sure there's an assistant message
+                remove_indices.add(i)
+                remove_indices.add(i + 1)
+                i += 2
+            else:
+                remove_indices.add(i)
+                i += 1
+        else:
+            i += 1
+            
+        # If we've removed too many messages, back off
+        if len(remove_indices) > messages_to_remove:
+            # Remove the last pair we added
+            remove_indices.pop()
+            if len(remove_indices) > 0:
+                remove_indices.pop()
+            break
+    
+    # Return dictionary without the removed messages
+    print("Trimming chat history - AFTER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    # Debug print - correct way
+    for key, message in sorted_messages:
+        print(f"Key: {key}, Message: {message}")
+
+    return {k: v for i, (k, v) in enumerate(sorted_messages) if i not in remove_indices}
+
+
 
 
     # Function to get the next available key

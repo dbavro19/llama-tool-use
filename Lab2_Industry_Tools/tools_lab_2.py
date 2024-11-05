@@ -49,7 +49,7 @@ def execute_tool(tool_name, tool_parameters):
     if tool_name == 'calculator':
         results = calculator(**tool_parameters)
         results_type = "int"
-        return_to_llm = True #True will return the results to the llm for a final answer , False returns the results directly
+        return_to_llm = False #True will return the results to the llm for a final answer , False returns the results directly
         # There is a bug in my code with Return to LLM being True that involves how chat history is maintained chat history.
         #The error will look like - Expected toolResult blocks at messages.0.content - just refresh the page
 
