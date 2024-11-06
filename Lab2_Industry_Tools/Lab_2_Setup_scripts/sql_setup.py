@@ -38,9 +38,9 @@ trade_blotter_data = [
     (5, 'User_2', 'Bond', 'US30Y', 'Market', 'Buy', 300, 100.00, 'Next Close', 'ACC_3141', 'PF_3', 'TR_2'),
     (6, 'User_3', 'Stock', 'AMZN', 'Limit', 'Buy', 75, 3300.55, 'Immediate', 'ACC_5161', 'PF_1', 'TR_3'),
     (7, 'User_1', 'Option', 'NFLX', 'Stop', 'Sell', 40, 575.20, 'EOD', 'ACC_7181', 'PF_2', 'TR_1'),
-    (8, 'User_2', 'Stock', 'MSFT', 'Market', 'Buy', 500, 305.60, 'Next Open', 'ACC_9202', 'PF_3', 'TR_2'),
+    (8, 'User_2', 'Stock', 'META', 'Market', 'Buy', 500, 305.60, 'Next Open', 'ACC_9202', 'PF_3', 'TR_2'),
     (9, 'User_3', 'Bond', 'US5Y', 'Limit', 'Sell', 250, 102.35, 'Next Close', 'ACC_1234', 'PF_1', 'TR_3'),
-    (10, 'User_1', 'Stock', 'FB', 'Stop', 'Buy', 125, 355.80, 'Immediate', 'ACC_5678', 'PF_2', 'TR_1')
+    (10, 'User_1', 'Stock', 'AMZN', 'Stop', 'Buy', 125, 355.80, 'Immediate', 'ACC_5678', 'PF_2', 'TR_1')
 ]
 
 # Insert hard-coded data into trade_blotter table
