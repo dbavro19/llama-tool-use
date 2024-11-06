@@ -16,7 +16,7 @@ This lab covers the fundamentals of Tool use in an LLM-powered application. You'
 2. Examine the Converse API structure and model selection logic
 3. Run the file from the Lab1_Basic_Tool_Use directory:
    ```bash
-   python3 .\logic_lab_1.py
+   python3 logic_lab_1.py
    ```
 4. Review the terminal output
 
