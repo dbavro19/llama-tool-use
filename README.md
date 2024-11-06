@@ -85,11 +85,11 @@ git clone https://github.com/dbavro19/llama-tool-use.git
 pip install -r requirements.txt
 ```
 
-4. Navigate to project directory and start the application:
+4. Navigate to project directory:
 ```bash
 cd llama-tool-use/
 ```
-
+and Start the Application
 ```bash
 streamlit run statuscheck.py --server.port 8080 --server.enableXsrfProtection=False
 ```
