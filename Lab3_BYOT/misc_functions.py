@@ -2,6 +2,7 @@
 
 import re
 import boto3
+import botocore
 
 
 
@@ -9,6 +10,16 @@ import boto3
 #Chat_history
 
 question_history = []
+
+
+##################################################################################################################
+### -LAB3 SETUP: Change this Method to add your bucket name here! If your tool is going to upload documents -####
+###################################################################################################################
+def get_bucket_name():
+
+    bucket_name = "Bucket Name" #Change this line to be YOUR bucket name that you created as part of the setup
+    return bucket_name
+
 
 
 def trim_chat_history(messages):
@@ -93,3 +104,44 @@ def call_llm(user_prompt, system_prompt=None, file=None, model_id="meta.llama3-1
 
 
     return text_value
+    
+
+#Uploads file to S3 Bucket
+def upload_file_to_s3(file, bucket_name, object_name=None):
+    if object_name is None:
+        object_name = file.name.strip()
+
+    s3_client = boto3.client('s3')
+    try:
+        response = s3_client.upload_fileobj(file, bucket_name, object_name)
+    except botocore.exceptions.ClientError as e:
+        print(f"Error uploading file to S3: {e}")
+
+    return object_name
+
+
+def download_file_from_s3_local(bucket_name, object_name, file_path=None):
+
+    if file_path is None:
+        file_path = object_name
+
+    s3_client = boto3.client('s3')
+    try:
+        s3_client.download_file(bucket_name, object_name, file_path)
+    except botocore.exceptions.ClientError as e:
+        print(f"Error downloading file from S3: {e}")
+              
+    return file_path
+
+def download_file_from_s3_into_bytes(bucket_name, object_name):
+
+    s3_client = boto3.client('s3')
+    try:
+        response = s3_client.get_object(Bucket=bucket_name, Key=object_name)
+        file_content = response['Body'].read()
+        return file_content
+    except botocore.exceptions.ClientError as e:
+        print(f"Error downloading file from S3: {e}")
+        file_content=None
+              
+    return file_content
