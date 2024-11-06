@@ -88,6 +88,9 @@ pip install -r requirements.txt
 4. Navigate to project directory and start the application:
 ```bash
 cd llama-tool-use/
+```
+
+```bash
 streamlit run statuscheck.py --server.port 8080 --server.enableXsrfProtection=False
 ```
 
