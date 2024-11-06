@@ -23,14 +23,14 @@ from math_tool import get_math_tool, calculator
 #Variable that will hold our Tool Configuration - Predefining our Tools for Lab 1
 tool_definition = []
 
-tool_definition.append(get_math_tool())
 tool_definition.append(get_basic_trivia_tool())
+tool_definition.append(get_math_tool())
+tool_definition.append(get_monte_carlo())
 tool_definition.append(get_stock_tool())
+tool_definition.append(get_insurance_policy_frequently_asked_questions())
 tool_definition.append(get_extract_financial_article())
 tool_definition.append(get_trade_confirmation())
 tool_definition.append(get_data_visualization())
-tool_definition.append(get_insurance_policy_frequently_asked_questions())
-tool_definition.append(get_monte_carlo())
 tool_definition.append(get_intelligent_document_processor())
 
 
@@ -45,22 +45,32 @@ tool_definition.append(get_intelligent_document_processor())
 def execute_tool(tool_name, tool_parameters):
 
 
-    if tool_name == 'calculator':
-        results = calculator(**tool_parameters)
-        results_type = "int"
-        return_to_llm = False #True will return the results to the llm for a final answer , False returns the results directly
-        # There is a bug in my code with Return to LLM being True that involves how chat history is maintained chat history.
-        #The error will look like - Expected toolResult blocks at messages.0.content - just refresh the page
 
-    elif tool_name == 'basic_trivia_tool':
+    if tool_name == 'basic_trivia_tool':
         results = basic_trivia_tool(**tool_parameters)
         results_type = type(results)
-        return_to_llm = False
+        return_to_llm = False ##Adjust This to TRUE - return this to false after playing with multi-turn tool use
 
+
+    elif tool_name == 'calculator':
+        results = calculator(**tool_parameters)
+        results_type = "int"
+        return_to_llm = False 
+
+
+    elif tool_name == 'monte_carlo_simulator':
+        results = monte_carlo_simulator(**tool_parameters)
+        results_type = "plotly"
+        return_to_llm = False
 
     elif tool_name == 'get_stock_price':
         results = get_stock_price(**tool_parameters)
         results_type = type(results)
+        return_to_llm = True # Adjust this to False after testing multi-turn tool use
+
+    elif tool_name == 'insurance_policy_frequently_asked_questions':
+        results = insurance_policy_frequently_asked_questions(**tool_parameters)
+        results_type = "text"
         return_to_llm = False
 
     elif tool_name == 'extract_financial_article':
@@ -75,15 +85,6 @@ def execute_tool(tool_name, tool_parameters):
         results, results_type = data_visualization_tool(**tool_parameters)
         return_to_llm = False
 
-    elif tool_name == 'insurance_policy_frequently_asked_questions':
-        results = insurance_policy_frequently_asked_questions(**tool_parameters)
-        results_type = "text"
-        return_to_llm = False
-
-    elif tool_name == 'monte_carlo_simulator':
-        results = monte_carlo_simulator(**tool_parameters)
-        results_type = "plotly"
-        return_to_llm = False
 
     elif tool_name == 'intelligent_document_processor':
         if 'url' in tool_parameters:

@@ -153,9 +153,23 @@ The json array of results in <json_results> xml tags - paying extra attention to
         return_type = "text"
     else:
         json_results = json.loads(json_results)
+        
+        # Extract the matching status
+        matching_status = json_results[0]['matching_status'].lower()
+
+        # Display result based on matching status
+        if matching_status == 'good':
+            st.success("😊 Trade Confirmation Successful!")
+        elif matching_status == 'bad':
+            st.warning("Trade Not Matching", icon="🚨")
+        else:
+            st.info(f"Matching status: {matching_status}")
+
         return_type = "json"
 
     print(f"Json_Results: {json_results}")
+
+
 
 
     return json_results, return_type

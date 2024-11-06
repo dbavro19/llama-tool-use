@@ -359,9 +359,9 @@ Valid Categories are:
      -W2 (for W2, and other "Wage and Tax" documents)
      -Other
 
-the output format should looke like this
+the output format should look like this - note that use should use the xml_tag that is requested of you
 <exmaple_output>
-<chosen_category>(Valid Category)</chosen_category>
+<requested_xml_tag>(Your Chosen Category)</requested_xml_tag>
 </exmaple_output>
 
 return the category in <category> xml tags. Do not include any other text in your response
