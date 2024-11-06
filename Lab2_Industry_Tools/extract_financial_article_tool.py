@@ -40,7 +40,7 @@ def extract_financial_article(web_url, return_to_llm=False):
     response = parse_url(web_url)
     if response == "Error: Unable to parse the provided url":
         st.write("Error: Unable to parse the provided url")
-        return response
+        return response,"text"
     
 
     else:
@@ -57,7 +57,7 @@ The output should be formatted according to the template in valid json
 
 The template is as follows:
 <sample_template>
-[
+
   {{
     "title": "(A brief, descriptive title for the earnings call or financial event)",
     "date": "(The date of the earnings call or financial event in YYYY-MM-DD format)",
@@ -70,11 +70,12 @@ The template is as follows:
     ],
     "takeaways": [
       "(A high-level conclusion about the company's or financial instrument's performance or strategy)",
+      "(A Key Quote from the article)"
       "(Sentiment analysis (Positive, Mixed, Negative) on the outlook of the subject))",
       "(Brief insight into why the Sentiment is what it is)"
     ],
-  }},
-]
+  }}
+
 </sample_template>
 
 Think through each step in you think and return your thoughts in <thinking> xml tags with no other text
@@ -111,18 +112,32 @@ def truncate_string(string, max_length=100):
     return (string[:max_length] + '...') if len(string) > max_length else string
 
 
+import traceback
+
 def parse_url(link):
     try:
-        url =[link.strip()]
+        url = link.strip()
+        print(f"url: {url}")
         loader = AsyncHtmlLoader(url)
+        print(f"loader: {loader}")
         docs = loader.load()
+        print(f"docs: {docs}")
 
         html2text = Html2TextTransformer()
+        print(f"html2text: {html2text}")
         docs_transformed = html2text.transform_documents(docs)
+        print(f"docs_transformed: {docs_transformed}")
 
         return docs_transformed[0].page_content
-    except:
-        return "Error: Unable to parse the provided url"
+    except Exception as e:
+        error_message = f"Error: Unable to parse the provided url\n"
+        error_message += f"Exception type: {type(e).__name__}\n"
+        error_message += f"Exception message: {str(e)}\n"
+        error_message += "Traceback:\n"
+        error_message += traceback.format_exc()
+        print(error_message)
+        return error_message
+
     
 
 
