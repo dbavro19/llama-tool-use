@@ -1,63 +1,103 @@
-# Lab 1: Introduction to Tool Use
+# AWS Bedrock Workshop Setup Guide
 
-## Overview
-This lab covers the fundamentals of Tool use in an LLM-powered application. You'll learn about the Bedrock Converse API, work with a user interface, create custom tools, and understand how to guide model behavior through system prompts.
+This workshop guides you through setting up and using Amazon Bedrock with LLama models. Follow these steps carefully to ensure proper configuration of your environment.
 
-## Files in this Lab
-- **frontend_lab1.py**: Contains the Front End Streamlit Logic for the GUI interface
-- **logic_lab_1.py**: Contains the LLM model integration logic and structuring
-- **tools_lab_1.py**: Contains Tool definitions, their corresponding logic, and execution code
-- **misc_functions.py**: Handles miscellaneous functions (no modifications needed during the lab)
 
-## Lab Steps
+## Workshop Access
 
-### Step 1: Introduction to the Bedrock Converse API
-1. Open and review `logic_lab_1.py`
-2. Examine the Converse API structure and model selection logic
-3. Run the file from the Lab1_Basic_Tool_Use directory:
-   ```bash
-   python .\logic_lab_1.py
-   ```
-4. Review the terminal output
+1. Access the workshop using [this link](https://catalog.us-east-1.prod.workshops.aws/join?access-code=e9bf-0c510a-75)
+2. Enter your email address to receive the passcode
+3. Input the received passcode to gain access
 
-### Step 2: Starting the UI
-1. Comment out the following line in `logic_lab_1.py`:
-   ```python
-   # test_run(message_1, message_2, message_3, model)
-   ```
-2. Launch the UI:
-   ```bash
-   streamlit run frontend_lab_1.py --server.port 8080 --server.enableXsrfProtection=False
-   ```
-3. Select "Preview Running Application Button" in your cloud9 environment
-4. Test the application:
-   - Try requesting random numbers with and without ranges
-   - Ask general knowledge questions
-   - Attempt to find edge cases (First person to break it wins a prize!)
+## Setup Steps
 
-### Step 3: Creating a New Tool
-1. Stop the UI (Ctrl+C)
-2. In `tools_lab_1.py`, uncomment the following:
-   - Tool configuration for `hello_response_tool_def`
-   - Add tool definition: `tool_definition.append(hello_response_tool_def)`
-   - Implementation method: `def hello_response(user_name=None):`
-3. Save all changes
-4. Restart the UI using the command from Step 2
+### 1. Enable Bedrock Model Access
 
-### Step 4: Guiding Model Tool Use
-1. Modify the system prompt in `logic_lab_1.py`:
-   - Either change the existing prompt
-   - Or uncomment the alternative system prompt
-2. Save changes
-3. Restart the UI using the command from Step 2
-4. Test and observe the behavioral differences
+1. Navigate to the Bedrock console
+2. Click on "Enable Bedrock Model Access"
+3. Select "Enable All Models"
+4. Click "Next"
+5. Click "Submit"
 
-## Completion
-Congratulations on completing Lab 1! You should now have a solid understanding of:
-- Tool Use / Function Calling
-- Bedrock Converse API integration
-- Custom tool creation
-- Model behavior modification through prompts
+Note: You may encounter some errors during this process - these can be safely ignored.
 
-## Next Steps
-Proceed to Lab 2 to explore industry-specific tools in action.
+### 2. IAM Role Configuration
+
+#### Create EC2 IAM Role
+
+1. Go to the IAM Console
+2. Navigate to "Roles" in the left sidebar
+3. Click "Create new role"
+4. Keep "AWS Service" as the default Trusted entity Type
+5. Select "EC2" from the "Use Case" dropdown
+6. Click "Next"
+7. Search for and select "AdministratorAccess"
+   > ⚠️ Note: This is not a security best practice and should only be used for workshop purposes
+8. Click "Next"
+9. Provide a role name
+10. Click "Create Role"
+
+#### Modify WSParticipantRole
+
+1. In IAM Roles, select "WSParticipantRole"
+2. Select "iam_policy-0" and edit the policy
+3. Around line 154, remove the explicit denies for the meta llama models
+4. Save the policy
+
+### 3. Cloud9 Environment Setup
+
+1. Navigate to the Cloud9 Console
+2. Click "Create Environment"
+3. Configure the environment:
+   - Provide a name
+   - Keep "New EC2 Instance" as environment type
+   - Select t3.small instance type
+   - Leave other settings as default
+4. Click "Create"
+5. Once ready, click "Open"
+
+### 4. Assign IAM Role to Cloud9
+
+1. Go to EC2 console
+2. Navigate to "Instances (running)"
+3. Select the running instance
+4. Choose Actions → Security → Modify IAM Role
+5. Select the previously created IAM role from the dropdown
+
+### 5. S3 Bucket Creation
+
+1. Navigate to S3 Console
+2. Click "Create Bucket"
+3. Provide a globally unique name (save this for Lab2)
+4. Keep default settings
+5. Click "Create Bucket"
+
+### 6. Workshop Environment Setup
+
+1. Return to Cloud9 console and click "Open"
+2. In the terminal, clone the repository:
+```bash
+git clone https://github.com/dbavro19/llama-tool-use.git
+```
+
+3. Install requirements:
+```bash
+pip install -r requirements.txt
+```
+
+4. Navigate to project directory and start the application:
+```bash
+cd llama-tool-use/
+streamlit run statuscheck.py --server.port 8080 --server.enableXsrfProtection=False
+```
+
+5. Preview the running application in Cloud9
+
+## Additional Resources
+
+- [Workshop Repository](https://github.com/dbavro19/llama-tool-use)
+- [AWS Workshop Environment](https://catalog.us-east-1.prod.workshops.aws/join?access-code=e9bf-0c510a-75)
+
+## Support
+
+If you encounter any issues during setup, please refer to the workshop facilitators or raise an issue in the GitHub repository.
