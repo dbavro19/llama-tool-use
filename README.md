@@ -35,6 +35,7 @@ Note: You may encounter some errors during this process - these can be safely ig
    - "AmazonBedrockFullAccess"
    - "AmazonS3FullAccess"
    - "AdministratorAccess"
+     
    > ⚠️ Note: It is against Best Practices to overprovision your permissions like this, but for ease of use in the lab we will be doing that today
 8. Click "Next"
 9. Provide a role name
