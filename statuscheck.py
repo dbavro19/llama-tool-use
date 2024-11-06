@@ -31,7 +31,14 @@ def llama_bedrock_call(model_id="meta.llama3-1-405b-instruct-v1:0", max_gen_len=
 
     
     system_prompt="""
-Return "Hello World"
+<<SYS>>
+You are responding to a user saying hello.
+Greet the user, in a professional and very concise manner
+Welcome them to the "AWS-META-FSI-Roadshow"
+<<SYS>>
+
+Hello!
+
 """
     
 
