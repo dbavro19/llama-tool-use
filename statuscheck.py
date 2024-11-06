@@ -31,9 +31,7 @@ def llama_bedrock_call(model_id="meta.llama3-1-405b-instruct-v1:0", max_gen_len=
 
     
     system_prompt="""
-<<SYS>>
-Say "Everything Looks Good!"
-<</SYS>>
+Return "Hello World"
 """
     
 
