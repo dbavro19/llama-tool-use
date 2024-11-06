@@ -23,7 +23,7 @@ def get_intelligent_document_processor():
     document_processor = {
         "toolSpec": {
             "name": "intelligent_document_processor",
-            "description": "Processes a pdf or image document or form file and extracts key information from the document. Useful for documents like pay stubs, drivers licenses, tax forms, and insurance claims - returns structured json",
+            "description": "Processes an image document and extracts key information from the document. Useful for documents like pay stubs, drivers licenses, tax forms, and insurance claims - returns structured json",
             "inputSchema": {
                 "json": {
                     "type": "object",
