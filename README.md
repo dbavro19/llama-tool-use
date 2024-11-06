@@ -31,14 +31,15 @@ Note: You may encounter some errors during this process - these can be safely ig
 4. Keep "AWS Service" as the default Trusted entity Type
 5. Select "EC2" from the "Use Case" dropdown
 6. Click "Next"
-7. Search for and select the following Polcies
-   >"AmazonBedrockFullAccess"
-   >"AmazonS3FullAccess"
-   >"AdministratorAccess"
+7. Search for and select the following Policies
+   - "AmazonBedrockFullAccess"
+   - "AmazonS3FullAccess"
+   - "AdministratorAccess"
    > ⚠️ Note: It is against Best Practices to overprovision your permissions like this, but for ease of use in the lab we will be doing that today
 8. Click "Next"
 9. Provide a role name
 10. Click "Create Role"
+
 
 #### Modify WSParticipantRole
 
