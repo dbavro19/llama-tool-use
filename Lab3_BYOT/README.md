@@ -67,10 +67,8 @@ from my_tool import get_tool_method, tool_method_name_change_this  # ADD your bu
 
 One other thing to note, any time your function would call an API, the model will not provide the API key. So if your get weather app is using the OpenWeather API, you can use this key
 
-> Note: OpenWeather API, you can use this key:
-```plaintext
-89d3c1f4adc6d1c49259fa7ba18f24e7
-```
+> Note: You will need an API key
+
 
 
 ## Testing Your Tool
