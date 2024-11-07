@@ -3,13 +3,7 @@
 This workshop guides you through setting up and using Amazon Bedrock with LLama models. Follow these steps carefully to ensure proper configuration of your environment.
 
 
-## Workshop Access
 
-1. Access the workshop using [this link](https://catalog.us-east-1.prod.workshops.aws/join?access-code=e9bf-0c510a-75)
-
-2.https://catalog.us-east-1.prod.workshops.aws/join?access-code=e9bf-0c510a-75
-3. Enter your email address to receive the passcode
-4. Input the received passcode to gain access
 
 ## Setup Steps
 
